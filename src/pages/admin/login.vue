@@ -118,17 +118,17 @@ const onSubmit = () => {
         login(form.username, form.password).then((res) => {
             console.log(res)
             // 判断是否成功
-            if (res.data.success == true) {
+            if (res.success == true) {
                 // 提示登录成功
                 showMessage('登录成功')
                 // 存储 Token 到 Cookie 中
-                let token = res.data.data.token
+                let token = res.data.token
                 setToken(token)
 
                 // 跳转到后台首页
                 router.push('/admin/index')
             } else {
-                let message = res.data.message
+                let message = res.message
                 // 提示消息
                 showMessage(message, 'error')
             }

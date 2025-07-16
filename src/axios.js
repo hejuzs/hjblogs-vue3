@@ -1,5 +1,6 @@
 import axios from "axios";
-import { getToken } from "@/composables/auth";
+// import { getToken } from "@/composables/auth";
+import { getToken } from "@/composables/cookie";
 import { showMessage} from '@/composables/util'
 
 // 创建 Axios 实例

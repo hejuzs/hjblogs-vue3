@@ -5,10 +5,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'nprogress/nprogress.css'
 
 // 引入全局状态管理 Pinia
-import { createPinia } from 'pinia'
-
-
-
+import pinia from '@/stores'
 
 import { createApp } from 'vue'
 import App from '@/App.vue'
@@ -16,8 +13,6 @@ import App from '@/App.vue'
 import router from '@/router'
 // 导入全局路由守卫
 import '@/permission'
-
-const pinia = createPinia()
 
 const app = createApp(App)
 

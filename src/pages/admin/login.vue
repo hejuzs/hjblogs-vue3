@@ -61,6 +61,11 @@ import { showMessage} from '@/composables/util'
 // import { setToken } from '@/composables/auth'
 import { setToken } from '@/composables/cookie'
 
+import { useUserStore } from '@/stores/user'
+
+const userStore = useUserStore()
+
+
 const router = useRouter()
 
 // 定义响应式的表单对象
@@ -114,6 +119,9 @@ const onSubmit = () => {
                 // 存储 Token 到 Cookie 中
                 let token = res.data.token
                 setToken(token)
+
+                // 获取用户信息，并存储到全局状态中
+                userStore.setUserInfo()
 
                 // 跳转到后台首页
                 router.push('/admin/index')

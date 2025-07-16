@@ -105,17 +105,6 @@ const onSubmit = () => {
 
         // 调用登录接口
         login(form.username, form.password).then((res) => {
-            // 省略...
-        })
-        .finally(() => {
-            // 结束加载
-            loading.value = false
-        })
-
-
-
-        // 调用登录接口
-        login(form.username, form.password).then((res) => {
             console.log(res)
             // 判断是否成功
             if (res.success == true) {
@@ -132,6 +121,10 @@ const onSubmit = () => {
                 // 提示消息
                 showMessage(message, 'error')
             }
+        })
+        .finally(() => {
+            // 结束加载
+            loading.value = false
         })
     })
 }

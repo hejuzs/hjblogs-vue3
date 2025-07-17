@@ -14,5 +14,12 @@ export function getUserInfo() {
 export function updateAdminPassword(data) {
     return axios.post("/admin/password/update", data)
 }
+// export function updateAdminPassword(data) {
+//     return new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve(axios.post("/admin/password/update", data));
+//         }, 2000);
+//     });
+// }
 
 

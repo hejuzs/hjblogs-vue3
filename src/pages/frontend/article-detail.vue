@@ -197,7 +197,7 @@ function refreshArticleDetail(articleId) {
         article.value = res.data
     })
 }
-refreshArticleDetail(route.params.articleId)
+// refreshArticleDetail(route.params.articleId)
 refreshArticleDetail(route.params.articleId)
 
 

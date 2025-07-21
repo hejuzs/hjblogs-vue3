@@ -77,6 +77,14 @@
 <script setup>
 import { useBlogSettingsStore } from '@/stores/blogsettings'
 
+import { initTooltips } from 'flowbite'
+import { onMounted, ref } from 'vue'
+// initialize components based on data attribute selectors
+onMounted(() => {
+    initTooltips();
+})
+
+
 // 引入博客设置信息 store
 const blogSettingsStore = useBlogSettingsStore()
 

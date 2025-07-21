@@ -31,6 +31,12 @@
 
             <!-- 分页列表 -->
             <el-table :data="tableData" border stripe style="width: 100%" v-loading="tableLoading">
+                <el-table-column label="序号" width="60" align="center">
+                    <template #default="scope">
+                        {{ (current - 1) * size + scope.$index + 1 }} 
+                        <!-- 公式： (当前页-1)*每页条数 + 行索引+1 -->
+                    </template>
+                </el-table-column>
                 <el-table-column prop="name" label="标签名称" width="180">
                     <template #default="scope">
                         <el-tag class="ml-2" type="success">{{ scope.row.name }}</el-tag>

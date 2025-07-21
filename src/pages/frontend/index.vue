@@ -12,7 +12,7 @@
                     <div v-for="(article, index) in articles" :key="index" class="col-span-2 md:col-span-1">
                         <div class="bg-white h-full border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
                             <!-- 文章封面 -->
-                            <a href="#">
+                            <a @click="goArticleDetailPage(article.id)" class="cursor-pointer">
                                 <img class="rounded-t-lg h-48 w-full"
                                     :src="article.cover" />
                             </a>
@@ -25,7 +25,7 @@
                                     </span>
                                 </div>
                                 <!-- 文章标题 -->
-                                <a href="#">
+                                <a @click="goArticleDetailPage(article.id)" class="cursor-pointer">
                                     <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                                         {{ article.title }}</h2>
                                 </a>
@@ -106,20 +106,34 @@
 
 
             <!-- 右边侧边栏，占用一列 -->
-            <aside class="col-span-4 md:col-span-1">
+            <!-- <aside class="col-span-4 md:col-span-1"> -->
                 <!-- 博主信息 -->
-                <UserInfoCard></UserInfoCard>
+                <!-- <UserInfoCard></UserInfoCard> -->
                 
                 <!-- 分类 -->
-                <CategoryListCard></CategoryListCard>
+                <!-- <CategoryListCard></CategoryListCard> -->
 
                 <!-- 标签 -->
-                <TagListCard></TagListCard>
+                <!-- <TagListCard></TagListCard> -->
+            <!-- </aside> -->
+             <!-- 右边侧边栏，占用一列 -->
+            <aside class="col-span-4 md:col-span-1">
+                <div class="sticky top-[5.5rem]">
+                    <!-- 博主信息 -->
+                    <UserInfoCard></UserInfoCard>
 
+                    <!-- 分类 -->
+                    <CategoryListCard></CategoryListCard>
+
+                    <!-- 标签 -->
+                    <TagListCard></TagListCard>
+                </div>
             </aside>
         </div>
 
     </main>
+    <!-- 返回顶部 -->
+    <ScrollToTopButton></ScrollToTopButton>
 
     <!-- 页脚 -->
     <Footer></Footer>
@@ -132,9 +146,10 @@ import Footer from '@/layouts/frontend/components/Footer.vue'
 import UserInfoCard from '@/layouts/frontend/components/UserInfoCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
 import TagListCard from '@/layouts/frontend/components/TagListCard.vue'
-import { initTooltips } from 'flowbite'
+// import { initTooltips } from 'flowbite'
 import { onMounted, ref } from 'vue'
 import { getArticlePageList } from '@/api/frontend/article'
+import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 
 import { useRouter } from 'vue-router'
 // 引入路由
@@ -142,9 +157,9 @@ const router = useRouter()
 
 
 // initialize components based on data attribute selectors
-onMounted(() => {
-    initTooltips();
-})
+// onMounted(() => {
+//     initTooltips();
+// })
 
 // 文章集合
 const articles = ref([])
@@ -189,6 +204,12 @@ const goTagArticleListPage = (id, name) => {
     // 跳转时通过 query 携带参数（标签 ID、标签名称）
     router.push({path: '/tag/article/list', query: {id, name}})
 }
+
+
+// 跳转文章详情页
+const goArticleDetailPage = (articleId) => {
+        router.push('/article/' + articleId)
+    }
 
 
 </script>

@@ -22,21 +22,33 @@
             </div>
 
             <!-- 右边侧边栏，占用一列 -->
-            <aside class="col-span-4 md:col-span-1">
+            <!-- <aside class="col-span-4 md:col-span-1"> -->
                 <!-- 博主信息 -->
-                <UserInfoCard></UserInfoCard>
-
+                <!-- <UserInfoCard></UserInfoCard> -->
                 <!-- 分类 -->
-                <CategoryListCard></CategoryListCard>
+                <!-- <CategoryListCard></CategoryListCard> -->
+            <!-- </aside> -->
+
+            <aside class="col-span-4 md:col-span-1">
+                <div class="sticky top-[5.5rem]">
+                    <!-- 博主信息 -->
+                    <UserInfoCard></UserInfoCard>
+
+                    <!-- 分类 -->
+                    <CategoryListCard></CategoryListCard>
+                </div>
             </aside>
         </div>
 
     </main>
+    <!-- 返回顶部 -->
+    <ScrollToTopButton></ScrollToTopButton>
 
     <Footer></Footer>
 </template>
 
 <script setup>
+import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 import Header from '@/layouts/frontend/components/Header.vue'
 import Footer from '@/layouts/frontend/components/Footer.vue'
 import UserInfoCard from '@/layouts/frontend/components/UserInfoCard.vue'

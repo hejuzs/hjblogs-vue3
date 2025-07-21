@@ -33,6 +33,13 @@
 
             <!-- 分页列表 -->
             <el-table :data="tableData" border stripe style="width: 100%" v-loading="tableLoading">
+                <!-- <el-table-column prop="id" label="ID" width="50" /> -->
+                <el-table-column label="序号" width="60" align="center">
+                    <template #default="scope">
+                        {{ (current - 1) * size + scope.$index + 1 }} 
+                        <!-- 公式： (当前页-1)*每页条数 + 行索引+1 -->
+                    </template>
+                </el-table-column>
                 <el-table-column prop="title" label="标题" width="380" />
                 <!-- <el-table-column prop="cover" label="封面" width="180" /> -->
                 <el-table-column prop="cover" label="封面" width="120">
@@ -41,14 +48,18 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="createTime" label="发布时间" width="180" />
-                <el-table-column label="操作" >
+                <el-table-column label="操作">
                     <template #default="scope">
                         <el-button size="small" @click="showArticleUpdateEditor(scope.row)">
                             <el-icon class="mr-1">
                                 <Edit />
                             </el-icon>
-                            编辑
-                        </el-button>
+                            编辑</el-button>
+                        <el-button size="small" @click="goArticleDetailPage(scope.row.id)">
+                            <el-icon class="mr-1">
+                                <View />
+                            </el-icon>
+                            预览</el-button>
                         <el-button type="danger" size="small" @click="deleteArticleSubmit(scope.row)">
                             <el-icon class="mr-1">
                                 <Delete />
@@ -217,6 +228,10 @@
     import { uploadFile } from '@/api/admin/file'
     import { getCategorySelectList } from '@/api/admin/category'
     import { searchTags, getTagSelectList } from '@/api/admin/tag'
+    import { useRouter } from 'vue-router'
+				
+    const router = useRouter()
+
 
     // 模糊搜索的文章标题
     const searchArticleTitle = ref('')
@@ -557,6 +572,11 @@
                 getTableData()
             })
         })
+    }
+
+    // 跳转文章详情页
+    const goArticleDetailPage = (articleId) => {
+        router.push('/article/' + articleId)
     }
 
 

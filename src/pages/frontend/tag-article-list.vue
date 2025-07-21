@@ -14,9 +14,9 @@
                         <svg t="1698980289658" class="icon w-5 h-5 mr-2" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13858" width="200" height="200"><path d="M646.4512 627.5584m-298.1888 0a298.1888 298.1888 0 1 0 596.3776 0 298.1888 298.1888 0 1 0-596.3776 0Z" fill="#C7ACEF" p-id="13859"></path><path d="M467.6096 962.5088c-34.4064 0-68.7616-13.1072-94.976-39.2704l-276.48-276.48c-52.3776-52.3776-52.3776-137.5744 0-189.9008L465.4592 87.552a105.216 105.216 0 0 1 76.8512-30.6176l308.6336 8.3456c55.3472 1.4848 100.096 46.0288 101.7856 101.376l9.5744 310.1696c0.8704 28.7744-10.2912 56.9344-30.6176 77.2608l-369.2032 369.2032c-26.112 26.112-60.4672 39.2192-94.8736 39.2192z m71.8848-844.1856c-11.4176 0-22.4768 4.5568-30.5664 12.6464L139.6224 500.2752c-28.416 28.416-28.416 74.6496 0 103.0144l276.48 276.48c28.416 28.416 74.6496 28.416 103.0144 0l369.2032-369.2032a43.4176 43.4176 0 0 0 12.6464-31.8976l-9.5744-310.1696c-0.7168-22.8864-19.2-41.2672-42.0352-41.8816l-308.6336-8.3456c-0.4608 0.0512-0.8192 0.0512-1.2288 0.0512z" fill="#4F4F4F" p-id="13860"></path><path d="M676.4032 445.5424c-62.208 0-112.8448-50.6368-112.8448-112.8448s50.6368-112.8448 112.8448-112.8448c62.208 0 112.8448 50.6368 112.8448 112.8448s-50.6368 112.8448-112.8448 112.8448z m0-164.1984c-28.3648 0-51.4048 23.04-51.4048 51.4048s23.04 51.4048 51.4048 51.4048c28.3648 0 51.4048-23.04 51.4048-51.4048s-23.0912-51.4048-51.4048-51.4048z" fill="#4F4F4F" p-id="13861"></path></svg>
                         {{ tagName }}
                     </h1>
-                    <ol v-if="articles && articles.length > 0" class="mt-3 divide-y divider-gray-200 dark:divide-gray-700">
+                    <ol v-show="articles && articles.length > 0" class="mt-3 divide-y divider-gray-200 dark:divide-gray-700">
                         <li v-for="(article, index) in articles" :key="index">
-                            <a href="#" class="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <a @click="goArticleDetailPage(article.id)" class="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
                                 <img class="w-24 h-12 mb-3 mr-3 rounded-lg sm:mb-0" :src="article.cover" />
                                 <div class="text-gray-600 dark:text-gray-400">
                                     <h2 class="text-base font-normal text-gray-900">
@@ -37,9 +37,8 @@
                             </a>
                         </li>
                     </ol>
-
                     <!-- 该标签下没有文章提示，指定为 flex 布局，内容垂直水平居中，并纵向排列  -->
-                    <div v-else class="flex items-center justify-center flex-col">
+                    <div v-show="isInitialized && !articles" class="flex items-center justify-center flex-col">
                         <svg height="300" node-id="1" sillyvg="true" template-height="600" template-width="600"
                             version="1.1" viewBox="0 0 600 600" width="600" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -211,7 +210,7 @@
                             target-height="46" target-width="33.334473" target-x="380.8566" target-y="423" />
                     </svg>
                     <p class="mt-2 mb-16 text-gray-400">此标签下还未发布文章哟~</p>
-                </div>
+                    </div>
             </div>
 
             <!-- 分页 -->
@@ -257,33 +256,59 @@
         </div>
 
         <!-- 右边侧边栏，占用一列 -->
-        <aside class="col-span-4 md:col-span-1">
+        <!-- <aside class="col-span-4 md:col-span-1"> -->
             <!-- 博主信息 -->
-            <UserInfoCard></UserInfoCard>
+            <!-- <UserInfoCard></UserInfoCard> -->
 
             <!-- 分类 -->
-            <CategoryListCard></CategoryListCard>
+            <!-- <CategoryListCard></CategoryListCard> -->
 
             <!-- 标签 -->
-            <TagListCard></TagListCard>
+            <!-- <TagListCard></TagListCard> -->
+        <!-- </aside> -->
+
+        <!-- 右边侧边栏，占用一列 -->
+        <aside class="col-span-4 md:col-span-1">
+                <div class="sticky top-[5.5rem]">
+                    <!-- 博主信息 -->
+                    <UserInfoCard></UserInfoCard>
+
+                    <!-- 分类 -->
+                    <CategoryListCard></CategoryListCard>
+
+                    <!-- 标签 -->
+                    <TagListCard></TagListCard>
+                </div>
         </aside>
+
+
     </div>
 
 </main>
+<!-- 返回顶部 -->
+<ScrollToTopButton></ScrollToTopButton>
 
-<Footer></Footer></template>
+<Footer></Footer>
+</template>
 
 <script setup>
+import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 import Header from '@/layouts/frontend/components/Header.vue'
 import Footer from '@/layouts/frontend/components/Footer.vue'
 import UserInfoCard from '@/layouts/frontend/components/UserInfoCard.vue'
 import TagListCard from '@/layouts/frontend/components/TagListCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
 import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { getTagArticlePageList } from '@/api/frontend/tag'
 
 const route = useRoute()
+const router = useRouter()
+
+// 跳转文章详情页
+const goArticleDetailPage = (articleId) => {
+        router.push('/article/' + articleId)
+    }
 
 // 文章集合
 const articles = ref([])
@@ -292,13 +317,7 @@ const tagName = ref(route.query.name)
 // 标签 ID
 const tagId = ref(route.query.id)
 
-// 监听路由
-watch(route, (newRoute, oldRoute) => {
-    current.value = 1 // 重置当前页码为 1
-    tagName.value = newRoute.query.name
-    tagId.value = newRoute.query.id
-    getTagArticles(current.value)
-})
+
 
 // 当前页码
 const current = ref(1)
@@ -308,6 +327,9 @@ const size = ref(10)
 const total = ref(0)
 // 总共多少页
 const pages = ref(0)
+
+// 初始化状态:是否已经初始化
+const isInitialized = ref(false);
 
 function getTagArticles(currentNo) {
     // 上下页是否能点击判断，当要跳转上一页且页码小于 1 时，则不允许跳转；当要跳转下一页且页码大于总页数时，则不允许跳转
@@ -322,7 +344,19 @@ function getTagArticles(currentNo) {
             pages.value = res.pages
         }
     })
+    isInitialized.value = true; // 数据加载完成后标记（第一次初始化过后做标记）
 }
 getTagArticles(current.value)
+
+// 监听路由
+watch(route, (newRoute, oldRoute) => {
+    current.value = 1 // 重置当前页码为 1
+    tagName.value = newRoute.query.name
+    tagId.value = newRoute.query.id
+    getTagArticles(current.value)
+})
+
+
+
 </script>
 

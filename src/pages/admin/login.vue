@@ -14,18 +14,26 @@
 
 
         <!-- 右边栏 -->
-        <div class="col-span-2 order-1 md:col-span-1 md:order-2 bg-white">
+        <div class="flex flex-col col-span-2 order-1 md:col-span-1 md:order-2 bg-white dark:bg-gray-800">
+
+            <!-- 黑夜白天开关 -->
+            <label class="switch ml-auto mt-4 mr-4">
+                <input type="checkbox" v-model="isLight" @click="toggleDark()">
+                <span class="slider"></span>
+            </label>
+            
         	<!-- flex-col 用于指定子元素垂直排列 -->
             <div class="flex justify-center items-center h-full flex-col animate__animated animate__bounceInRight animate__fast" >
+                
                 <!-- 大标题，设置字体粗细、大小、下边距 -->
-                <h1 class="font-bold text-4xl mb-5">欢迎回来</h1>
+                <h1 class="font-bold text-4xl mb-5 dark:text-white">欢迎回来</h1>
                 <!-- 设置 flex 布局，内容垂直水平居中，文字颜色，以及子内容水平方向 x 轴间距 -->
-                <div class="flex items-center justify-center mb-7 text-gray-400 space-x-2">
+                <div class="flex items-center justify-center mb-7 text-gray-400 space-x-2 dark:text-gray-500">
                     <!-- 左边横线，高度为 1px, 宽度为 16，背景色设置 -->
-                    <span class="h-[1px] w-16 bg-gray-200"></span>
+                    <span class="h-[1px] w-16 bg-gray-200 dark:bg-gray-700"></span>
                     <span>账号密码登录</span>
                     <!-- 右边横线 -->
-                    <span class="h-[1px] w-16 bg-gray-200"></span>
+                    <span class="h-[1px] w-16 bg-gray-200 dark:bg-gray-700"></span>
                 </div>
                 <!-- 引入 Element Plus 表单组件，移动端设置宽度为 5/6，PC 端设置为 2/5 -->
                 <el-form class="w-5/6 md:w-2/5" ref="formRef" :rules="rules" :model="form">
@@ -62,11 +70,36 @@ import { showMessage} from '@/composables/util'
 import { setToken } from '@/composables/cookie'
 
 import { useUserStore } from '@/stores/user'
+import { useDark, useToggle } from '@vueuse/core'
 
 const userStore = useUserStore()
 
 
 const router = useRouter()
+
+// 是否是白天
+const isLight = ref(true)
+const isDark = useDark({
+  onChanged(dark) {
+    // update the dom, call the API or something
+    console.log('onchange:' + dark)
+    if (dark) {
+        // 给 body 添加 class="dark"
+        document.documentElement.classList.add('dark');
+        // 设置 switch 的值
+        isLight.value = false
+    } else {
+        // 移除 body 中添加 class="dark"
+        document.documentElement.classList.remove('dark');
+        isLight.value = true
+    }
+  },
+})
+const toggleDark = useToggle(isDark)
+
+
+
+
 
 // 定义响应式的表单对象
 const form = reactive({
@@ -161,3 +194,56 @@ onBeforeUnmount(() => {
 </script>
 
 
+<style scoped>
+/* The switch - the box around the slider */
+.switch {
+  font-size: 14px;
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  --background: #28096b;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--background);
+  transition: .5s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: 50%;
+  left: 10%;
+  bottom: 15%;
+  box-shadow: inset 8px -4px 0px 0px #fff000;
+  background: var(--background);
+  transition: .5s;
+}
+
+input:checked + .slider {
+  background-color: #522ba7;
+}
+
+input:checked + .slider:before {
+  transform: translateX(100%);
+  box-shadow: inset 15px -4px 0px 15px #fff000;
+}
+</style>

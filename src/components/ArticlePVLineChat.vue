@@ -18,7 +18,8 @@ const props = defineProps({
 // 初始化折线图
 function initLineChat() {
     var chartDom = document.getElementById('lineChat');
-    var myChart = echarts.init(chartDom);
+    // var myChart = echarts.init(chartDom);
+    var myChart = echarts.init(chartDom, null, { width: 600 });
     var option;
 
     // 从 props.value 中获取日期集合和 pv 访问量集合

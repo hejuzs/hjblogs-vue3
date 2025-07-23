@@ -44,7 +44,9 @@
                 <!-- <el-table-column prop="cover" label="封面" width="180" /> -->
                 <el-table-column prop="cover" label="封面" width="120">
                     <template #default="scope">
-                        <el-image style="width: 50px;" :src="scope.row.cover" />
+                        <!-- <el-image style="width: 50px;" :src="scope.row.cover" /> -->
+                        <el-image style="width: 90px; height: 45px" :src="scope.row.cover" fit="fill"/>
+
                     </template>
                 </el-table-column>
                 <el-table-column prop="createTime" label="发布时间" width="180" />

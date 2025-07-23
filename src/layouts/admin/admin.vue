@@ -44,6 +44,12 @@
     import AdminTagList from './components/AdminTagList.vue';
 
     import { useMenuStore } from '@/stores/menu'
+    import { onMounted } from 'vue';
+
+    onMounted(() => {
+    // 移除 html 标签中的 class="dark"
+    document.documentElement.classList.remove('dark');
+    })
 
     const menuStore = useMenuStore()
 </script>

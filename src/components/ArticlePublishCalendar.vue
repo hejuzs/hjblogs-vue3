@@ -40,7 +40,7 @@ function initCalendar() {
     }
 
     var chartDom = document.getElementById('calendar');
-    var myChart = echarts.init(chartDom);
+    var myChart = echarts.init(chartDom, null, { width: 600 });
     var option;
 
     option = {

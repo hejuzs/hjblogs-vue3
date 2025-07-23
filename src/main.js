@@ -16,6 +16,7 @@ import '@/permission'
 // 图片点击放大
 import 'viewerjs/dist/viewer.css'
 import VueViewer from 'v-viewer'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 const app = createApp(App)
 

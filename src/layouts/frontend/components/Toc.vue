@@ -15,7 +15,7 @@
             </svg>
             文章目录
         </h2>
-        <div class="toc-wrapper">
+        <div class="toc-wrapper" :class="[isDark ? 'dark' : '']">
             <ul class="toc">
                 <!-- 二级标题 -->
                 <li v-for="(h2, index) in titles" :key="index">
@@ -34,6 +34,9 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useDark } from '@vueuse/core'
+
+const isDark = useDark()
 
 // 响应式的目录数据
 const titles = ref([])
@@ -185,4 +188,28 @@ function initTocData(container) {
     width: 2px;
     background: #eaecef;
 }
+
+::v-deep(.dark .toc:before) {
+            content: " ";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            width: 2px;
+            background: #30363d;
+        }
+
+::v-deep(.dark .toc li span) {
+    color: #9e9e9e;
+}
+
+::v-deep(.dark .toc li .active) {
+    color: rgb(2 132 199 / 1);
+}
+
+::v-deep(.dark .toc li span:hover) {
+    color: rgb(2 132 199 / 1);
+}
+
 </style>

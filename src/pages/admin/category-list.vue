@@ -3,19 +3,24 @@
         <!-- 表头分页查询条件， shadow="never" 指定 card 卡片组件没有阴影 -->
         <el-card shadow="never" class="mb-5">
             <!-- flex 布局，内容垂直居中 -->
-            <div class="flex items-center">
-                <el-text>分类名称</el-text>
-                <div class="ml-3 w-52 mr-5"><el-input v-model="searchCategoryName" placeholder="请输入（模糊查询）" /></div>
-
-                <el-text>创建日期</el-text>
-                <div class="ml-3 w-30 mr-5">
-                    <el-date-picker style="top: 3px" v-model="pickDate" type="daterange" range-separator="至" start-placeholder="开始时间"
-                        end-placeholder="结束时间" :shortcuts="shortcuts" size="default" @change="datepickerChange" />
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <el-text>分类名称</el-text>
+                    <div class="ml-3 w-52 mr-5"><el-input v-model="searchCategoryName" placeholder="请输入（模糊查询）" /></div>
                 </div>
 
-                <el-button type="primary" class="ml-3" :icon="Search" @click="getTableData">查询</el-button>
+                <div class="flex items-center">
+                    <el-text>创建日期</el-text>
+                    <div class="ml-3 w-30 mr-5">
+                        <el-date-picker v-model="pickDate" type="daterange" range-separator="至" start-placeholder="开始时间"
+                            end-placeholder="结束时间" :shortcuts="shortcuts" size="default" @change="datepickerChange" />
+                    </div>
+                </div>
 
-                <el-button class="ml-3" :icon="RefreshRight" @click="reset">重置</el-button>
+                <div class="flex items-center">
+                    <el-button type="primary" class="ml-3" :icon="Search" @click="getTableData">查询</el-button>
+                    <el-button class="ml-3" :icon="RefreshRight" @click="reset">重置</el-button>
+                </div>
             </div>
         </el-card>
 
@@ -30,17 +35,19 @@
             </div>
 
             <!-- 分页列表 -->
-            <el-table :data="tableData" border stripe style="width: 100%" v-loading="tableLoading">
+             <!-- bug修复： table-layout="auto"让表格中的列能够自动适配屏幕宽度 -->
+            <el-table :data="tableData" border stripe style="width: 100%" v-loading="tableLoading" table-layout="auto">
+                <!-- align="center" 设置对应列表头和内容居中 -->
                 <el-table-column label="序号" width="60" align="center">
                     <template #default="scope">
                         {{ (current - 1) * size + scope.$index + 1 }} 
                         <!-- 公式： (当前页-1)*每页条数 + 行索引+1 -->
                     </template>
                 </el-table-column>
-                <el-table-column prop="name" label="分类名称" width="180" />
-                <el-table-column prop="articlesTotal" label="文章数" width="100" />
-                <el-table-column prop="createTime" label="创建时间" width="180" />
-                <el-table-column label="操作" >
+                <el-table-column prop="name" label="分类名称" align="center"/>
+                <el-table-column prop="articlesTotal" label="文章数" align="center"/>
+                <el-table-column prop="createTime" label="创建时间" align="center"/>
+                <el-table-column label="操作" align="center">
                     <template #default="scope">
                     <el-button type="danger" size="small" @click="deleteCategorySubmit(scope.row)">
                         <el-icon class="mr-1">
@@ -61,22 +68,6 @@
 
         </el-card>
 
-        <!-- 添加分类 -->
-        <!-- <el-dialog v-model="dialogVisible" title="添加文章分类" width="40%" :draggable ="true" :close-on-click-modal="false" :close-on-press-escape="false">
-            <el-form ref="formRef" :rules="rules" :model="form">
-                        <el-form-item label="分类名称" prop="name" label-width="80px">
-                            <el-input size="large" v-model="form.name" placeholder="请输入分类名称" maxlength="20" show-word-limit clearable/>
-                        </el-form-item>
-                    </el-form>
-            <template #footer>
-                <span class="dialog-footer">
-                    <el-button @click="dialogVisible = false">取消</el-button>
-                    <el-button type="primary" @click="onSubmit">
-                        提交
-                    </el-button>
-                </span>
-            </template>
-        </el-dialog> -->
         <!-- 添加分类 -->
         <FormDialog ref="formDialogRef" title="添加文章分类" destroyOnClose @submit="onSubmit">
             <el-form ref="formRef" :rules="rules" :model="form">

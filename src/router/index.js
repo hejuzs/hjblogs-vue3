@@ -15,6 +15,7 @@ import TagList from '@/pages/frontend/tag-list.vue'
 import TagArticleList from '@/pages/frontend/tag-article-list.vue'
 import ArticleDetail from '@/pages/frontend/article-detail.vue'
 import NotFound from '@/pages/frontend/404.vue'
+import AdminWikiList from '@/pages/admin/wiki-list.vue'
 
 // 统一在这里声明所有路由
 const routes = [
@@ -142,6 +143,13 @@ const routes = [
                 component: AdminBlogSetting,
                 meta: {
                     title: '博客设置'
+                }
+            },
+            {
+                path: "/admin/wiki/list",
+                component: AdminWikiList,
+                meta: {
+                    title: '知识库管理'
                 }
             },
         ]

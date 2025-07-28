@@ -21,7 +21,6 @@
 
         <el-card shadow="never">
             <!-- 写文章按钮 -->
-            <!-- 写文章按钮 -->
             <div class="mb-5">
                 <el-button type="primary" @click="isArticlePublishEditorShow = true">
                     <el-icon class="mr-1">
@@ -47,6 +46,17 @@
                         <!-- <el-image style="width: 50px;" :src="scope.row.cover" /> -->
                         <el-image style="width: 90px; height: 45px" :src="scope.row.cover" fit="fill"/>
 
+                    </template>
+                </el-table-column>
+                <el-table-column prop="isTop" label="是否置顶" width="100">
+                    <template #default="scope">
+                        <el-switch
+                            @change="handleIsTopChange(scope.row)"
+                            v-model="scope.row.isTop"
+                            inline-prompt
+                            :active-icon="Check"
+                            :inactive-icon="Close"
+                        />
                     </template>
                 </el-table-column>
                 <el-table-column prop="createTime" label="发布时间" width="180" />
@@ -221,7 +231,7 @@
     import { ref, reactive } from 'vue'
     import { Search, RefreshRight } from '@element-plus/icons-vue'
     import moment from 'moment'
-    import { getArticlePageList, deleteArticle, publishArticle, getArticleDetail, updateArticle } from '@/api/admin/article'
+    import { getArticlePageList, deleteArticle, publishArticle, getArticleDetail, updateArticle,updateArticleIsTop } from '@/api/admin/article'
     import { showMessage, showModel } from '@/composables/util'
 
     import { MdEditor } from 'md-editor-v3'
@@ -231,6 +241,7 @@
     import { getCategorySelectList } from '@/api/admin/category'
     import { searchTags, getTagSelectList } from '@/api/admin/tag'
     import { useRouter } from 'vue-router'
+    import { Check, Close } from '@element-plus/icons-vue'
 				
     const router = useRouter()
 
@@ -579,6 +590,27 @@
     // 跳转文章详情页
     const goArticleDetailPage = (articleId) => {
         router.push('/article/' + articleId)
+    }
+
+
+    // ======================= 置顶相关 =======================
+
+    // 点击置顶事件
+    const handleIsTopChange = (row) => {
+        updateArticleIsTop({id: row.id, isTop: row.isTop}).then((res) => {
+            // 重新请求分页接口，渲染列表数据
+            getTableData()
+
+            if (res.success == false) {
+                // 获取服务端返回的错误消息
+                let message = res.message
+                // 提示错误消息
+                showMessage(message, 'error')
+                return
+            }
+
+            showMessage(row.isTop ? '置顶成功' : "已取消置顶")
+        })
     }
 
 

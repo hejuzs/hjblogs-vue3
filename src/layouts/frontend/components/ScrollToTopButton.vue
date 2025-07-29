@@ -1,7 +1,7 @@
 <template>
     <!-- fixed 固定位置，并通过 bottom-xx right-xx 设置在右下角 -->
     <div v-show="showScrollToTopBtn" @click="scrollToTop"
-        class="border cursor-pointer fixed bottom-2 right-2 md:bottom-10 md:right-10 inline p-3 bg-white hover:bg-gray-100 rounded dark:bg-gray-800 dark:hover:bg-gray-900 dark:border-gray-700">
+        class="z-50 border cursor-pointer fixed bottom-2 right-2 md:bottom-10 md:right-10 inline p-3 bg-white hover:bg-gray-100 rounded dark:bg-gray-800 dark:hover:bg-gray-900 dark:border-gray-700">
         <svg class="w-4 h-4 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
             viewBox="0 0 10 14">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

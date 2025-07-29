@@ -1,96 +1,100 @@
 <template>
-    <div>
-        <!-- 表头分页查询条件， shadow="never" 指定 card 卡片组件没有阴影 -->
-        <el-card shadow="never" class="mb-5">
-            <!-- flex 布局，内容垂直居中 -->
-            <div class="flex items-center justify-between" >
+    <div class="main min-h-screen flex flex-col">
+        
+    
+        <main class="grow">
+            <!-- 表头分页查询条件， shadow="never" 指定 card 卡片组件没有阴影 -->
+            <el-card shadow="never" class="mb-5">
+                <!-- flex 布局，内容垂直居中 -->
+                <div class="flex items-center justify-between" >
 
-                <div class="flex items-center">
-                    <el-text>标签名称</el-text>
-                    <div class="ml-3 w-52 mr-5"><el-input v-model="searchTagName" placeholder="请输入（模糊查询）" /></div>
-                    
-                </div>
-                <div class="flex items-center">
-                    <el-text>创建日期</el-text>
-                    <div class="ml-3 w-30 mr-5">
-                        <!-- 日期选择组件（区间选择） -->
-                        <el-date-picker v-model="pickDate" type="daterange" range-separator="至" start-placeholder="开始时间"
-                            end-placeholder="结束时间" size="default" :shortcuts="shortcuts" @change="datepickerChange" />
+                    <div class="flex items-center">
+                        <el-text>标签名称</el-text>
+                        <div class="ml-3 w-52 mr-5"><el-input v-model="searchTagName" placeholder="请输入（模糊查询）" /></div>
+                        
                     </div>
-                    
+                    <div class="flex items-center">
+                        <el-text>创建日期</el-text>
+                        <div class="ml-3 w-30 mr-5">
+                            <!-- 日期选择组件（区间选择） -->
+                            <el-date-picker v-model="pickDate" type="daterange" range-separator="至" start-placeholder="开始时间"
+                                end-placeholder="结束时间" size="default" :shortcuts="shortcuts" @change="datepickerChange" />
+                        </div>
+                        
+                    </div>
+                    <div class="flex items-center">
+                        <el-button type="primary" class="ml-3" :icon="Search" @click="getTableData">查询</el-button>
+                        <el-button class="ml-3" :icon="RefreshRight" @click="reset">重置</el-button>   
+                    </div>
                 </div>
-                <div class="flex items-center">
-                    <el-button type="primary" class="ml-3" :icon="Search" @click="getTableData">查询</el-button>
-                    <el-button class="ml-3" :icon="RefreshRight" @click="reset">重置</el-button>   
+            </el-card>
+
+            <el-card shadow="never">
+                <!-- 新增按钮 -->
+                <div class="mb-5">
+                    <el-button type="primary" @click="addCategoryBtnClick">
+                        <el-icon class="mr-1">
+                            <Plus />
+                        </el-icon>
+                        新增</el-button>
                 </div>
-            </div>
-        </el-card>
 
-        <el-card shadow="never">
-            <!-- 新增按钮 -->
-            <div class="mb-5">
-                <el-button type="primary" @click="addCategoryBtnClick">
-                    <el-icon class="mr-1">
-                        <Plus />
-                    </el-icon>
-                    新增</el-button>
-            </div>
+                <!-- 分页列表 -->
+                <el-table :data="tableData" border stripe style="width: 100%" v-loading="tableLoading" table-layout="auto">
+                    <el-table-column label="序号" width="60" align="center">
+                        <template #default="scope">
+                            {{ (current - 1) * size + scope.$index + 1 }} 
+                            <!-- 公式： (当前页-1)*每页条数 + 行索引+1 -->
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="name" label="标签名称" align="center">
+                        <template #default="scope">
+                            <el-tag class="ml-2" type="success">{{ scope.row.name }}</el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="articlesTotal" label="文章数" align="center"/>
+                    <el-table-column prop="createTime" label="创建时间"  align="center"/>
+                    <el-table-column label="操作" align="center">
+                        <template #default="scope">
+                            <el-button type="danger" size="small" @click="deleteTagSubmit(scope.row)">
+                                <el-icon class="mr-1">
+                                    <Delete />
+                                </el-icon>
+                                删除
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
 
-            <!-- 分页列表 -->
-            <el-table :data="tableData" border stripe style="width: 100%" v-loading="tableLoading" table-layout="auto">
-                <el-table-column label="序号" width="60" align="center">
-                    <template #default="scope">
-                        {{ (current - 1) * size + scope.$index + 1 }} 
-                        <!-- 公式： (当前页-1)*每页条数 + 行索引+1 -->
-                    </template>
-                </el-table-column>
-                <el-table-column prop="name" label="标签名称" align="center">
-                    <template #default="scope">
-                        <el-tag class="ml-2" type="success">{{ scope.row.name }}</el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="articlesTotal" label="文章数" align="center"/>
-                <el-table-column prop="createTime" label="创建时间"  align="center"/>
-                <el-table-column label="操作" align="center">
-                    <template #default="scope">
-                        <el-button type="danger" size="small" @click="deleteTagSubmit(scope.row)">
-                            <el-icon class="mr-1">
-                                <Delete />
-                            </el-icon>
-                            删除
+                <!-- 分页 -->
+                <div class="mt-10 flex justify-center">
+                    <el-pagination v-model:current-page="current" v-model:page-size="size" :page-sizes="[10, 20, 50]"
+                        :small="false" :background="true" layout="total, sizes, prev, pager, next, jumper" :total="total"
+                        @size-change="handleSizeChange" @current-change="getTableData" />
+                </div>
+
+            </el-card>
+
+            <!-- 添加标签 -->
+            <FormDialog ref="formDialogRef" title="添加文章标签" destroyOnClose @submit="onSubmit">
+                <el-form ref="formRef" :model="form">
+                    <el-form-item prop="name">
+                        <el-tag v-for="tag in dynamicTags" :key="tag" class="mx-1" closable :disable-transitions="false"
+                            @close="handleClose(tag)">
+                            {{ tag }}
+                        </el-tag>
+                        <span class="w-20">
+                            <el-input v-if="inputVisible" ref="InputRef" v-model="inputValue" class="ml-1 w-20" size="small"
+                            @keyup.enter="handleInputConfirm" @blur="handleInputConfirm" />
+                        <el-button v-else class="button-new-tag ml-1" size="small" @click="showInput">
+                            + 新增标签
                         </el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
+                        </span>
+                    </el-form-item>
+                </el-form>
+            </FormDialog>
 
-            <!-- 分页 -->
-            <div class="mt-10 flex justify-center">
-                <el-pagination v-model:current-page="current" v-model:page-size="size" :page-sizes="[10, 20, 50]"
-                    :small="false" :background="true" layout="total, sizes, prev, pager, next, jumper" :total="total"
-                    @size-change="handleSizeChange" @current-change="getTableData" />
-            </div>
-
-        </el-card>
-
-        <!-- 添加标签 -->
-        <FormDialog ref="formDialogRef" title="添加文章标签" destroyOnClose @submit="onSubmit">
-            <el-form ref="formRef" :model="form">
-                <el-form-item prop="name">
-                    <el-tag v-for="tag in dynamicTags" :key="tag" class="mx-1" closable :disable-transitions="false"
-                        @close="handleClose(tag)">
-                        {{ tag }}
-                    </el-tag>
-                    <span class="w-20">
-                        <el-input v-if="inputVisible" ref="InputRef" v-model="inputValue" class="ml-1 w-20" size="small"
-                        @keyup.enter="handleInputConfirm" @blur="handleInputConfirm" />
-                    <el-button v-else class="button-new-tag ml-1" size="small" @click="showInput">
-                        + 新增标签
-                    </el-button>
-                    </span>
-                </el-form-item>
-            </el-form>
-        </FormDialog>
-
+        </main>
     </div>
 </template>
 

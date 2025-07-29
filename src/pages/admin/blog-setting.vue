@@ -1,77 +1,80 @@
 <template>
-    <div>
-        <!-- 卡片组件， shadow="never" 指定 card 卡片组件没有阴影 -->
-        <el-card shadow="never">
-            <el-form ref="formRef" :model="form" label-width="160px" :rules="rules">
-                <el-form-item label="博客名称" prop="name">
-                    <el-input v-model="form.name" clearable />
-                </el-form-item>
-                <el-form-item label="作者名" prop="author">
-                    <el-input v-model="form.author" clearable />
-                </el-form-item>
-                <el-form-item label="博客 LOGO" prop="logo">
-                    <el-upload class="avatar-uploader" action="#"
-                        :on-change="handleLogoChange" :auto-upload="false"
-                        :show-file-list="false">
-                        <img v-if="form.logo" :src="form.logo" class="avatar" />
-                        <el-icon v-else class="avatar-uploader-icon">
-                            <Plus />
-                        </el-icon>
-                    </el-upload>
-                </el-form-item>
-                <el-form-item label="作者头像" prop="avatar">
-                    <el-upload class="avatar-uploader" action="#"
-                    :on-change="handleAvatarChange" :auto-upload="false"
-                        :show-file-list="false">
-                        <img v-if="form.avatar" :src="form.avatar" class="avatar" />
-                        <el-icon v-else class="avatar-uploader-icon">
-                            <Plus />
-                        </el-icon>
-                    </el-upload>
-                </el-form-item>
-                <el-form-item label="介绍语" prop="introduction">
-                    <el-input v-model="form.introduction" type="textarea" />
-                </el-form-item>
-                <!-- 开启 Github 访问 -->
-                <el-form-item label="开启GihHub访问">
-                    <el-switch v-model="isGithubChecked" inline-prompt :active-icon="Check" :inactive-icon="Close"
-                        @change="githubSwitchChange" />
-                </el-form-item>
-                <el-form-item label="GitHub访问地址" v-if="isGithubChecked">
-                    <el-input v-model="form.githubHomepage" clearable placeholder="请输入 GitHub 主页访问的 URL" />
-                </el-form-item>
+    <div class="main min-h-screen flex flex-col">
+        
+        <main class="grow">
+            <!-- 卡片组件， shadow="never" 指定 card 卡片组件没有阴影 -->
+            <el-card shadow="never">
+                <el-form ref="formRef" :model="form" label-width="160px" :rules="rules">
+                    <el-form-item label="博客名称" prop="name">
+                        <el-input v-model="form.name" clearable />
+                    </el-form-item>
+                    <el-form-item label="作者名" prop="author">
+                        <el-input v-model="form.author" clearable />
+                    </el-form-item>
+                    <el-form-item label="博客 LOGO" prop="logo">
+                        <el-upload class="avatar-uploader" action="#"
+                            :on-change="handleLogoChange" :auto-upload="false"
+                            :show-file-list="false">
+                            <img v-if="form.logo" :src="form.logo" class="avatar" />
+                            <el-icon v-else class="avatar-uploader-icon">
+                                <Plus />
+                            </el-icon>
+                        </el-upload>
+                    </el-form-item>
+                    <el-form-item label="作者头像" prop="avatar">
+                        <el-upload class="avatar-uploader" action="#"
+                        :on-change="handleAvatarChange" :auto-upload="false"
+                            :show-file-list="false">
+                            <img v-if="form.avatar" :src="form.avatar" class="avatar" />
+                            <el-icon v-else class="avatar-uploader-icon">
+                                <Plus />
+                            </el-icon>
+                        </el-upload>
+                    </el-form-item>
+                    <el-form-item label="介绍语" prop="introduction">
+                        <el-input v-model="form.introduction" type="textarea" />
+                    </el-form-item>
+                    <!-- 开启 Github 访问 -->
+                    <el-form-item label="开启GihHub访问">
+                        <el-switch v-model="isGithubChecked" inline-prompt :active-icon="Check" :inactive-icon="Close"
+                            @change="githubSwitchChange" />
+                    </el-form-item>
+                    <el-form-item label="GitHub访问地址" v-if="isGithubChecked">
+                        <el-input v-model="form.githubHomepage" clearable placeholder="请输入 GitHub 主页访问的 URL" />
+                    </el-form-item>
 
-                <!-- 开启 Gitee 访问 -->
-                <el-form-item label="开启Gitee访问">
-                    <el-switch v-model="isGiteeChecked" inline-prompt :active-icon="Check" :inactive-icon="Close"
-                        @change="giteeSwitchChange" />
-                </el-form-item>
-                <el-form-item label="Gitee访问地址" v-if="isGiteeChecked">
-                    <el-input v-model="form.giteeHomepage" clearable placeholder="请输入 Gitee 主页访问的 URL" />
-                </el-form-item>
+                    <!-- 开启 Gitee 访问 -->
+                    <el-form-item label="开启Gitee访问">
+                        <el-switch v-model="isGiteeChecked" inline-prompt :active-icon="Check" :inactive-icon="Close"
+                            @change="giteeSwitchChange" />
+                    </el-form-item>
+                    <el-form-item label="Gitee访问地址" v-if="isGiteeChecked">
+                        <el-input v-model="form.giteeHomepage" clearable placeholder="请输入 Gitee 主页访问的 URL" />
+                    </el-form-item>
 
-                <!-- 开启知乎访问 -->
-                <el-form-item label="开启知乎访问">
-                    <el-switch v-model="isZhihuChecked" inline-prompt :active-icon="Check" :inactive-icon="Close"
-                        @change="zhihuSwitchChange" />
-                </el-form-item>
-                <el-form-item label="知乎访问地址" v-if="isZhihuChecked">
-                    <el-input v-model="form.zhihuHomepage" clearable placeholder="请输入知乎主页访问的 URL" />
-                </el-form-item>
+                    <!-- 开启知乎访问 -->
+                    <el-form-item label="开启知乎访问">
+                        <el-switch v-model="isZhihuChecked" inline-prompt :active-icon="Check" :inactive-icon="Close"
+                            @change="zhihuSwitchChange" />
+                    </el-form-item>
+                    <el-form-item label="知乎访问地址" v-if="isZhihuChecked">
+                        <el-input v-model="form.zhihuHomepage" clearable placeholder="请输入知乎主页访问的 URL" />
+                    </el-form-item>
 
-                <!-- 开启 CSDN 访问 -->
-                <el-form-item label="开启CSDN访问">
-                    <el-switch v-model="isCSDNChecked" inline-prompt :active-icon="Check" :inactive-icon="Close"
-                        @change="csdnSwitchChange" />
-                </el-form-item>
-                <el-form-item label="CSDN访问地址" v-if="isCSDNChecked">
-                    <el-input v-model="form.csdnHomepage" clearable placeholder="请输入 CSDN 主页访问的 URL" />
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" :loading="btnLoading" @click="onSubmit">保存</el-button>
-                </el-form-item>
-            </el-form>
-        </el-card>
+                    <!-- 开启 CSDN 访问 -->
+                    <el-form-item label="开启CSDN访问">
+                        <el-switch v-model="isCSDNChecked" inline-prompt :active-icon="Check" :inactive-icon="Close"
+                            @change="csdnSwitchChange" />
+                    </el-form-item>
+                    <el-form-item label="CSDN访问地址" v-if="isCSDNChecked">
+                        <el-input v-model="form.csdnHomepage" clearable placeholder="请输入 CSDN 主页访问的 URL" />
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" :loading="btnLoading" @click="onSubmit">保存</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-card>
+        </main>
     </div>
 </template>
 

@@ -16,6 +16,8 @@ import TagArticleList from '@/pages/frontend/tag-article-list.vue'
 import ArticleDetail from '@/pages/frontend/article-detail.vue'
 import NotFound from '@/pages/frontend/404.vue'
 import AdminWikiList from '@/pages/admin/wiki-list.vue'
+import WikiList from '@/pages/frontend/wiki-list.vue'
+import WikiDetail from '@/pages/frontend/wiki-detail.vue'
 
 // 统一在这里声明所有路由
 const routes = [
@@ -81,6 +83,20 @@ const routes = [
         component: NotFound,
         meta: {
             title: '404 页'
+        }
+    },
+    {
+        path: '/wiki/list', // 知识库
+        component: WikiList,
+        meta: {
+            title: '知识库'
+        }
+    },
+    {
+        path: '/wiki/:wikiId', // 知识库详情页
+        component: WikiDetail,
+        meta: {
+            title: '知识库详情'
         }
     },
     /* {

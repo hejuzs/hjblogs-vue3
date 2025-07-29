@@ -1,17 +1,27 @@
 <template>
-    <header class="sticky top-0 z-10">
+    <header class="sticky top-0 z-30">
         <!-- <nav class="bg-white border-gray-200 border-b dark:bg-gray-900"> -->
-        <nav class="bg-white border-gray-200 border-b dark:border-gray-800 dark:bg-gray-900">
-            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <!-- 博客 LOGO 、博客名称 -->
-                <a href="/" class="flex items-center">
-                    <img :src="blogSettingsStore.blogSettings.logo" class="h-8 mr-3 rounded-full" alt="Flowbite Logo" />
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">{{
-                        blogSettingsStore.blogSettings.name }}</span>
-                </a>
-                <div class="flex items-center md:order-2">
-                    
+            <nav class="bg-white border-gray-200 border-b dark:bg-[#0d1117] dark:border-gray-800">
+            <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <div class="flex items-center">
+                    <!-- 移动端知识库目录图标 -->
+                    <div class="inline-block lg:hidden mr-3">
+                        <input type="checkbox" id="checkbox" v-model="isDrawerExpand">
+                        <label for="checkbox" class="toggle">
+                            <div class="bars" id="bar1"></div>
+                            <div class="bars" id="bar2"></div>
+                            <div class="bars" id="bar3"></div>
+                        </label>
+                    </div>
 
+                    <!-- 博客 LOGO 、博客名称 -->
+                    <a href="/" class="flex items-center">
+                        <img :src="blogSettingsStore.blogSettings.logo" class="h-8 mr-3 rounded-full" alt="Weblog Logo" />
+                        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-gray-400">{{
+                            blogSettingsStore.blogSettings.name }}</span>
+                    </a>
+                </div>
+                <div class="flex items-center md:order-2">
                     <!-- 白天黑夜切换按钮 -->
                     <button @click="toggleDark()" class="ml-1 mr-4 vt-switch vt-switch-appearance" type="button" role="switch" aria-label="切换深色模式"
                         aria-checked="false" data-v-d401ce6f=""><span class="vt-switch-check"><span
@@ -146,28 +156,28 @@
                         class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                         <li>
                             <a @click="router.push('/')"
-                                :class="[currPath == '/' ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-sky-500 dark:md:border-sky-600' : 'text-gray-900 dark:text-white']"
+                                :class="[currPath == '/' ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-gray-400 dark:md:border-sky-600' : 'text-gray-900 dark:text-gray-400']"
                                 class="cursor-pointer block py-2 pl-3 pr-4 rounded md:rounded-none hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:bg-transparent md:p-0 dark:hover:bg-gray-700 md:dark:hover:bg-transparent" 
                                 aria-current="page">首页</a>
                         </li>
                         <li>
                             <a @click="router.push('/category/list')"
-                                :class="[currPath.startsWith('/category') ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-sky-500 dark:md:border-sky-600' : 'text-gray-900 dark:text-white']"
+                                :class="[currPath.startsWith('/category') ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-gray-400 dark:md:border-sky-600' : 'text-gray-900 dark:text-gray-400']"
                                 class="cursor-pointer block py-2 pl-3 pr-4 rounded md:rounded-none hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:p-0 md:dark:hover:text-sky-500  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">分类</a>
                         </li>
                         <li>
                             <a @click="router.push('/tag/list')"
-                                :class="[currPath.startsWith('/tag') ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-sky-500 dark:md:border-sky-600' : 'text-gray-900 dark:text-white']"
+                                :class="[currPath.startsWith('/tag') ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-gray-400 dark:md:border-sky-600' : 'text-gray-900 dark:text-gray-400']"
                                 class="cursor-pointer block py-2 pl-3 pr-4 rounded md:rounded-none hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:p-0 md:dark:hover:text-sky-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">标签</a>
                         </li>
                         <li>
                             <a @click="router.push('/wiki/list')"
-                                :class="[currPath == '/wiki/list' ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-sky-500 dark:md:border-sky-600' : 'text-gray-900 dark:text-white']"
+                                :class="[currPath.startsWith('/wiki') ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-gray-400 dark:md:border-sky-600' : 'text-gray-900 dark:text-gray-400']"
                                 class="block py-2 pl-3 pr-4 rounded md:rounded-none hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:p-0 md:dark:hover:text-sky-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">知识库</a>
                         </li>
                         <li>
                             <a @click="router.push('/archive/list')"
-                                :class="[currPath == '/archive/list' ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-sky-500 dark:md:border-sky-600' : 'text-gray-900 dark:text-white']"
+                                :class="[currPath == '/archive/list' ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-gray-400 dark:md:border-sky-600' : 'text-gray-900 dark:text-gray-400']"
                                 class="cursor-pointer block py-2 pl-3 pr-4 rounded md:rounded-none hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:p-0 md:dark:hover:text-sky-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">归档</a>
                         </li>
                     </ul>
@@ -210,8 +220,9 @@
             </div>
         </div>
     </div>
-    <!-- 站内搜索弹出框 -->
-    <div id="search-modal" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem) max-h-full">
+    <!-- 站内搜索 -->
+    <div id="search-modal" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-2xl max-h-full">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -323,16 +334,58 @@
             </div>
         </div>
     </div>
+    <!-- 知识库目录 drawer component -->
+    <div id="wiki-catalog-drawer"
+        class="block lg:hidden top-[4.3rem] fixed left-0 z-20 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-[#0d1117]"
+        tabindex="-1" aria-labelledby="drawer-label">
+        <!-- 知识库目录 -->
+        <div class="grow transition-all duration-300">
+            <div id="drawer-accordion-flush" data-accordion="collapse"
+                data-active-classes="bg-white dark:bg-[#0d1117] dark:text-gray-300" data-inactive-classes=""
+                class="last:pb-[170px]">
+                <div v-for="(catalog, index) in props.catalogs" :key="index">
+                    <h2 :id="'drawer-accordion-flush-heading-' + catalog.id">
+                        <button type="button" class="hover:bg-gray-100 flex items-center justify-between w-full py-3 px-3 rounded-lg 
+                            font-medium rtl:text-right text-gray-600 dark:text-gray-400 gap-3 dark:hover:bg-gray-800"
+                            :data-accordion-target="'#drawer-accordion-flush-body-' + catalog.id"
+                            :aria-expanded="[catalog.children.some(item => item.articleId == route.query.articleId) ? true : false]"
+                            :aria-controls="'drawer-accordion-flush-body-' + catalog.id">
+                            <!-- 一级目录标题 -->
+                            <span class="flex items-center" v-html="catalog.title"></span>
+                            <!-- 箭头 -->
+                            <svg data-accordion-icon class="w-3 h-3 rotate-90 transition-all shrink-0" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5 5 1 1 5" />
+                            </svg>
+                        </button>
+                    </h2>
+                    <!-- 二级目录 -->
+                    <ul :id="'drawer-accordion-flush-body-' + catalog.id" class="hidden"
+                        :aria-labelledby="'drawer-accordion-flush-heading-' + catalog.id">
+                        <!-- 二级目录标题 -->
+                        <li v-for="(childCatalog, index2) in catalog.children" :key="index2" class="flex items-center ps-10 py-2 pe-3 rounded-lg cursor-pointer 
+                                    dark:text-gray-400"
+                            :class="[childCatalog.articleId == route.query.articleId ? 'bg-sky-50 text-sky-600 dark:bg-sky-950 dark:text-sky-500' : 'hover:bg-gray-100 dark:hover:bg-gray-800']"
+                            @click="goWikiArticleDetailPage(childCatalog.articleId)" v-html="childCatalog.title">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </template>
 
 <script setup>
 import { onMounted, ref, onBeforeUnmount, watch } from 'vue'
-import { initCollapses, initDropdowns, initModals } from 'flowbite'
+// import { initCollapses, initDropdowns, initModals, Modal, Drawer } from 'flowbite'
+import { initCollapses, initDropdowns, initModals, initAccordions, Modal, Drawer } from 'flowbite'
 import { useBlogSettingsStore } from '@/stores/blogsettings'
 import { useUserStore } from '@/stores/user'
 import { useRouter, useRoute } from 'vue-router'
 import { showMessage } from '@/composables/util'
-import { Modal } from 'flowbite'
 import { getArticleSearchPageList } from '@/api/frontend/search'
 import { useDark, useToggle } from '@vueuse/core'
                                 
@@ -390,10 +443,15 @@ onMounted(() => {
     initCollapses();
     initDropdowns();
     initModals();
+    initAccordions();
 
     // 初始化
     const $modalElement = document.querySelector('#search-modal');
     searchModal.value = new Modal($modalElement, modalOptions, instanceOptions);
+
+    // 初始化知识库目录 Drawer
+    const $drawerElement = document.getElementById('wiki-catalog-drawer');
+    wikiDrawer.value = new Drawer($drawerElement, drawerOptions, instanceOptionsDrawer);
 
     // 注册键盘事件监听器
     window.addEventListener('keydown', handleKeyDown);
@@ -523,6 +581,76 @@ const logout = () => {
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
+
+
+
+
+
+
+// ================ 移动端知识库目录抽屉相关逻辑 =========
+
+
+// 知识库目录 Drawer 引用
+const wikiDrawer = ref(null)
+
+// options with default values
+const drawerOptions = {
+    placement: 'left',
+    backdrop: true,
+    bodyScrolling: false,
+    edge: false,
+    edgeOffset: '',
+    backdropClasses:
+        'bg-gray-900/50 dark:bg-gray-950/50 fixed inset-0 z-[19] block lg:hidden',
+    onHide: () => {
+        console.log('drawer is hidden');
+        isDrawerExpand.value = false
+    },
+    onShow: () => {
+        console.log('drawer is shown');
+    },
+    onToggle: () => {
+        console.log('drawer has been toggled');
+    },
+};
+
+
+// instance options object
+const instanceOptionsDrawer = {
+  id: 'wiki-catalog-drawer',
+  override: true
+};
+
+// 知识库目录抽屉是否展开，默认未展开
+const isDrawerExpand = ref(false)
+
+// 侦听 isDrawerExpand 变量
+watch(isDrawerExpand, (newText, oldText) => {
+    if (newText) {
+        // 展示抽屉
+        wikiDrawer.value.show()
+    } else {
+        // 隐藏抽屉
+        wikiDrawer.value.hide()
+    }
+})
+
+
+
+// 跳转文章详情页
+const goWikiArticleDetailPage = (articleId) => {
+    isDrawerExpand.value = false
+    router.push({path: '/wiki/' + route.params.wikiId, query: {articleId}})
+}
+
+// 对外暴露属性，将目录数据传进来
+const props = defineProps({
+    catalogs: {
+        type: Array,
+        default: []
+    }
+})
+
 </script>
 
 <style scoped>
@@ -601,6 +729,67 @@ const toggleDark = useToggle(isDark)
 .vt-switch-appearance-sun {
     opacity: 1;
 }
+
+#checkbox {
+  display: none;
+}
+
+.toggle {
+  position: relative;
+  width: 23px;
+  height: 23px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition-duration: .5s;
+}
+
+.bars {
+  width: 100%;
+  height: 2.5px;
+  background-color: rgb(107 114 128 / 1);
+  border-radius: 2.5px;
+}
+
+#bar2 {
+  transition-duration: .8s;
+}
+
+#bar1,#bar3 {
+  width: 70%;
+}
+
+#checkbox:checked + .toggle .bars {
+  position: absolute;
+  transition-duration: .5s;
+}
+
+#checkbox:checked + .toggle #bar2 {
+  transform: scaleX(0);
+  transition-duration: .5s;
+}
+
+#checkbox:checked + .toggle #bar1 {
+  width: 100%;
+  transform: rotate(45deg);
+  transition-duration: .5s;
+}
+
+#checkbox:checked + .toggle #bar3 {
+  width: 100%;
+  transform: rotate(-45deg);
+  transition-duration: .5s;
+}
+
+#checkbox:checked + .toggle {
+  transition-duration: .5s;
+  transform: rotate(180deg);
+}
+
+
 </style>
 
 

@@ -91,7 +91,7 @@
 
                 <!-- 二级目录 -->
                 <ul v-if="catalog.children && catalog.children.length > 0">
-                    <VueDraggable ref="el" v-model="catalog.children">
+                    <VueDraggable ref="el" v-model="catalog.children" @end="onDragEnd">
                         <li v-for="(childCatalog, index2) in catalog.children" :key="index2"
                             class="flex items-center ps-10 py-2 pe-3 rounded-lg hover:bg-gray-100">
                             <!-- 二级标题 -->

@@ -103,8 +103,9 @@ const toggleDark = useToggle(isDark)
 
 // 定义响应式的表单对象
 const form = reactive({
-    username: '',
-    password: ''
+    // 默认账号密码
+    username: 'hejuzs',
+    password: 'hejuzs'
 })
 
 // 表单引用

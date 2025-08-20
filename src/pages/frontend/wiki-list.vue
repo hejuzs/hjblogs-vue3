@@ -3,7 +3,8 @@
         <Header></Header>
 
         <!-- 主内容区域 -->
-        <main class="container max-w-screen-xl mx-auto px-4 md:px-6 py-4">
+        <main class="container max-w-screen-xl mx-auto p-4 px-6 grow">
+        <!-- <main class="container max-w-screen-xl mx-auto px-4 md:px-6 py-4"> -->
             <!-- grid 表格布局，分为 12 列 -->
             <div class="grid grid-cols-12 gap-7">
                 <!-- 左边栏 -->
@@ -63,6 +64,7 @@
         <ScrollToTopButton></ScrollToTopButton>
 
         <Footer></Footer>
+        <!-- <WikiFooter></WikiFooter> -->
     </div>
 </template>
 
